@@ -5,13 +5,13 @@ describe Api::V1::SessionsController do
   describe "POST #create" do
 
     before(:each) do
-      @user = FactoryGirl.create(:user)
+      @user = FactoryGirl.create :user
     end
 
     context "when the credentials are correct" do
 
       before(:each) do
-        credentials = { email: @user.email, password: "12345678"}
+        credentials = { email: @user.email, password: "12345678" }
         post :create, { session: credentials }
       end
 
@@ -23,7 +23,8 @@ describe Api::V1::SessionsController do
       it { should respond_with 200 }
     end
 
-    context "when credentials are incorrect" do
+    context "when the credentials are incorrect" do
+
       before(:each) do
         credentials = { email: @user.email, password: "invalidpassword" }
         post :create, { session: credentials }
@@ -35,16 +36,20 @@ describe Api::V1::SessionsController do
 
       it { should respond_with 422 }
     end
+
   end
 
-  describe "DELETE #destory" do
+  describe "DELETE #destroy" do
+
     before(:each) do
       @user = FactoryGirl.create :user
       sign_in @user
       delete :destroy, id: @user.auth_token
     end
 
-    it { should respond_with 204}
+    it { should respond_with 204 }
 
   end
+
+
 end
